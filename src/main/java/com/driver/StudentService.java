@@ -26,16 +26,16 @@ public class StudentService {
         return student_repository.getTeacherByName(name);
     }
 
-    public List<String> getStudentsByTeacherName(String name){
-        return student_repository.getStudentsByTeacherName(name);
+    public List<String> getStudentsByTeacherName(String teacher){
+        return student_repository.getStudentsByTeacherName(teacher);
     }
 
     public List<String> getAllStudents(){
         return student_repository.getAllStudents();
     }
 
-    public boolean deleteTeacherByName(String name){
-        return student_repository.deleteTeacherByName(name);
+    public void deleteTeacherByName(String teacher){
+        student_repository.deleteTeacherByName(teacher);
     }
     public void deleteAllTeachers(){
         student_repository.deleteAllTeachers();

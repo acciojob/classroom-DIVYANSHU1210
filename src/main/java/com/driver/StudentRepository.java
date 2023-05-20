@@ -22,47 +22,69 @@ public class StudentRepository {
     }
 
     public void addStudentTeacherPair(String student, String teacher){
-        if(classroom.containsKey(teacher)){
-            List<String> oldlist = classroom.get(teacher);
-            oldlist.add(student);
-            classroom.put(teacher, oldlist);
-        }
-        else{
-            List<String> newlist = new ArrayList<>();
-            newlist.add(student);
-            classroom.put(teacher, newlist);
-        }
+        List<String> studentlist = new ArrayList<>();
+        if (classroom.containsKey(teacher))
+            studentlist = classroom.get(teacher);
+        if (!studentlist.contains(student))
+            studentlist.add(student);
+        classroom.put(teacher, studentlist);
+//        if(classroom.containsKey(teacher)){
+//            List<String> oldlist = classroom.get(teacher);
+//            oldlist.add(student);
+//            classroom.put(teacher, oldlist);
+//        }
+//        else{
+//            List<String> newlist = new ArrayList<>();
+//            newlist.add(student);
+//            classroom.put(teacher, newlist);
+//        }
     }
 
     public Student getStudentByName(String name){
-        if(Students.containsKey(name)) return Students.get(name);
-        return null;
+        return Students.get(name);
+//        if(Students.containsKey(name)) return Students.get(name);
+//        return null;
     }
 
     public Teacher getTeacherByName(String name){
-        if(Teachers.containsKey(name)) return Teachers.get(name);
-        return null;
+        return Teachers.get(name);
+//        if(Teachers.containsKey(name)) return Teachers.get(name);
+//        return null;
     }
 
     public List<String> getStudentsByTeacherName(String name){
-        if(classroom.containsKey(name))return classroom.get(name);
-        return new ArrayList<>();
+        List<String> studentlist = new ArrayList<>();
+        if(classroom.containsKey(name))studentlist =  classroom.get(name);
+        return studentlist;
     }
 
     public List<String> getAllStudents(){
         return new ArrayList<>(Students.keySet());
     }
 
-    public boolean deleteTeacherByName(String name){
-        if(classroom.containsKey(name)){
-            classroom.remove(name);
-            return true;
+    public void deleteTeacherByName(String teacher){
+        List<String> pairlist = new ArrayList<>();
+        if (classroom.containsKey(teacher)) {
+            pairlist = classroom.get(teacher);
+            for (String st : pairlist) {
+                Students.remove(st);
+            }
+            classroom.remove(teacher);
         }
-        return false;
+        Teachers.remove(teacher);
+//        if(classroom.containsKey(name)){
+//            classroom.remove(name);
+//        }
     }
     public void deleteAllTeachers(){
-        classroom.clear();
-        Students.clear();
+        for (String teacher : classroom.keySet()) {
+            List<String> pairlist = classroom.get(teacher);
+            for (String st : pairlist) {
+                if (Students.containsKey(st))
+                    Students.remove(st);
+            }
+        }
         Teachers.clear();
+        classroom.clear();
     }
 }

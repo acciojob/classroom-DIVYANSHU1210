@@ -42,36 +42,36 @@ public class StudentController {
 
     @GetMapping("/get-student-by-name/{name}")
     public ResponseEntity<Student> getStudentByName(@PathVariable String name){
-        Student student = ss.getStudentByName(name) ; // Assign student by calling service layer method
-
+        Student student = null ; // Assign student by calling service layer method
+        student = ss.getStudentByName(name);
         return new ResponseEntity<>(student, HttpStatus.CREATED);
     }
 
     @GetMapping("/get-teacher-by-name/{name}")
     public ResponseEntity<Teacher> getTeacherByName(@PathVariable String name){
-        Teacher teacher = ss.getTeacherByName(name); // Assign student by calling service layer method
-
+        Teacher teacher = null; // Assign student by calling service layer method
+        teacher = ss.getTeacherByName(name);
         return new ResponseEntity<>(teacher, HttpStatus.CREATED);
     }
 
     @GetMapping("/get-students-by-teacher-name/{teacher}")
     public ResponseEntity<List<String>> getStudentsByTeacherName(@PathVariable String teacher){
-        List<String> students = ss.getStudentsByTeacherName(teacher); // Assign list of student by calling service layer method
-
+        List<String> students = null; // Assign list of student by calling service layer method
+        students = ss.getStudentsByTeacherName(teacher);
         return new ResponseEntity<>(students, HttpStatus.CREATED);
     }
 
     @GetMapping("/get-all-students")
     public ResponseEntity<List<String>> getAllStudents(){
-        List<String> students = ss.getAllStudents(); // Assign list of student by calling service layer method
-
+        List<String> students = null; // Assign list of student by calling service layer method
+        students = ss.getAllStudents();
         return new ResponseEntity<>(students, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete-teacher-by-name")
     public ResponseEntity<String> deleteTeacherByName(@RequestParam String teacher){
-        boolean ans = ss.deleteTeacherByName(teacher);
-        if(ans == false)return new ResponseEntity<>(teacher + " does not exist", HttpStatus.CREATED);
+        ss.deleteTeacherByName(teacher);
+//        if(ans == false)return new ResponseEntity<>(teacher + " does not exist", HttpStatus.CREATED);
         return new ResponseEntity<>(teacher + " removed successfully", HttpStatus.CREATED);
     }
     @DeleteMapping("/delete-all-teachers")
